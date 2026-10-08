@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AlpinIO — Privacy Policy / Zásady ochrany osobných údajov</title>
+<style>
+  :root {
+    --bg: #F7FAFC;
+    --surface: #FFFFFF;
+    --border: #E6EDF3;
+    --text: #0B1220;
+    --text-muted: #51606E;
+    --accent: #2196C8;
+    --accent-2: #57D2FF;
+    --warn-bg: #FFF6E5;
+    --warn-border: #F0C36D;
+    --warn-text: #7A5300;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0B1220;
+      --surface: #121B2B;
+      --border: #223349;
+      --text: #EAF2F8;
+      --text-muted: #9FB3C8;
+      --accent: #57D2FF;
+      --accent-2: #57D2FF;
+      --warn-bg: #2A2410;
+      --warn-border: #6B5717;
+      --warn-text: #F0C36D;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+  }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 24px 18px 64px;
+  }
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 18px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .topbar-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .lang-btn {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .lang-btn[aria-pressed="true"] {
+    background: var(--accent);
+    color: #04121A;
+    border-color: var(--accent);
+  }
+  h1 { font-size: 26px; margin: 8px 0 4px; }
+  h2 {
+    font-size: 18px;
+    margin: 36px 0 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  h2:first-of-type { border-top: none; padding-top: 0; }
+  h3 { font-size: 15px; margin: 20px 0 8px; color: var(--accent); }
+  p { margin: 10px 0; }
+  .byline { color: var(--text-muted); font-size: 14px; margin-bottom: 20px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 14px 0;
+  }
+  .note {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-border);
+    color: var(--warn-text);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    margin: 10px 0;
+  }
+  .table-scroll { overflow-x: auto; margin: 12px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    min-width: 520px;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+  }
+  th { background: var(--surface); color: var(--text-muted); font-weight: 600; }
+  ul { padding-left: 20px; margin: 8px 0; }
+  li { margin: 4px 0; }
+  a { color: var(--accent); }
+  code {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1px 5px;
+    border-radius: 5px;
+    font-size: 12.5px;
+  }
+  footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 12.5px;
+  }
+  [data-lang] { display: none; }
+  html[data-active="sk"] [data-lang="sk"] { display: block; }
+  html[data-active="en"] [data-lang="en"] { display: block; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <button class="lang-btn" id="btn-sk" onclick="setLang('sk')" aria-pressed="true">SK</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')" aria-pressed="false">EN</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ============================= SLOVAK ============================= -->
+<div data-lang="sk">
+
+<h1>Zásady ochrany osobných údajov — AlpinIO</h1>
+<p class="byline">Posledná aktualizácia: 8. októbra 2026</p>
+
+<h2>1. Kto spracúva vaše údaje</h2>
+<p>
+Prevádzkovateľom je:<br>
+<strong>Samuel Martyňuk</strong><br>
+Kontaktný e-mail: <a href="mailto:support.alpinio@gmail.com">support.alpinio@gmail.com</a>
+</p>
+<div class="note">
+Prevádzkovateľ je fyzická osoba (vývojár appky), nie registrovaná spoločnosť. Fakturačná/korešpondenčná
+adresa a IČO (ak sa appka v budúcnosti prevádzkuje cez živnosť/s.r.o.) tu budú doplnené, keď bude k dispozícii.
+</div>
+
+<h2>2. Čo AlpinIO je</h2>
+<p>
+AlpinIO je appka pre bezpečnosť a rozhodovanie v horách, zameraná na Tatry. Zobrazuje lavínové bulletiny
+(SLP/HZS), počasie a turistickú mapu s navigáciou. <strong>Appka informuje — rozhodnutie v teréne robíte vy.</strong>
+</p>
+
+<h2>3. Aké údaje zbierame, na aký účel a na akom právnom základe</h2>
+
+<h3>3.1 Účtové údaje</h3>
+<p>Pri registrácii (email/heslo alebo prihlásenie cez Google) ukladáme: emailovú adresu, používateľské meno,
+zobrazované meno, telefónne číslo (voliteľné), profilovú fotku (voliteľné), krajinu (vyberanú zo zoznamu,
+nie odvodenú z polohy), jazykové nastavenie appky a časové značky účtu.</p>
+<p>Pri prihlásení cez Google appka cez Firebase dostane vaše meno, email a URL profilovej fotky — ide o
+štandardný OAuth flow (appka od verzie September 2026 používa Firebase-vlastný webview OAuth, nie
+samostatný Google plugin; rozsah získaných údajov je rovnaký: <code>email</code> + <code>profile</code>).</p>
+<div class="table-scroll">
+<table>
+<tr><th>Účel</th><th>Právny základ</th></tr>
+<tr><td>Vytvorenie a správa účtu, prihlásenie, zobrazenie vášho profilu ostatným (username, foto)</td>
+<td>Plnenie zmluvy (čl. 6 ods. 1 písm. b) GDPR) — bez účtu appka v V1 nefunguje, prihlásenie je povinné</td></tr>
+</table>
+</div>
+<p>Email a používateľské meno sú povinné. Telefón a fotka sú voliteľné — ich nezadanie neobmedzuje žiadnu funkciu appky.</p>
+
+<h3>3.2 Poloha</h3>
+<p>Appka žiada <strong>presnú polohu len na popredí</strong> ("while in use") — oprávnenie na polohu na pozadí
+appka nežiada (v <code>AndroidManifest.xml</code> je takéto oprávnenie len zakomentované, nie aktívne).</p>
+<p>Poloha sa používa na:</p>
+<ul>
+  <li>zobrazenie vašej pozície na mape,</li>
+  <li>vycentrovanie počasia a lavínového bulletinu na vaše miesto,</li>
+  <li>výpočet pešej trasy a vyhľadávanie "v okolí",</li>
+  <li>výber najbližšieho z 3 výškových pásiem (údolie/stred/hrebeň) pri zobrazovaní počasia — GPS výška
+      (<code>Position.altitude</code>) sa použije výhradne na vašom zariadení na tento výber a nikdy sa
+      neposiela na náš backend.</li>
+</ul>
+<p><strong>Komu a čo z polohy odchádza:</strong></p>
+<ul>
+  <li>Naše vlastné Cloud Functions (<code>europe-west1</code>, Frankfurt) dostanú vaše súradnice, aby
+      vypočítali, do ktorej ~5 km mapovej bunky patríte. Ukladá sa zdieľaná dátová bunka, nie história
+      vašej osobnej polohy.</li>
+  <li>Pri plánovaní trasy appka posiela štart/cieľ/medzizastávky (presné súradnice) na náš
+      <strong>vlastný self-hosted navigačný server (BRouter, Cloud Run, <code>europe-west1</code>)</strong>.
+      Tento server nemá vlastnú databázu používateľov ani autentifikáciu — žiadny klientský kľúč sa
+      neposiela, endpoint je verejne dostupný len appke. Google Cloud Run štandardne loguje technické
+      metadáta HTTP požiadaviek (vrátane URL so súradnicami) rovnako, ako je popísané v bode 3.6 nižšie —
+      tieto súradnice teda prechádzajú rovnakým štandardným infraštruktúrnym logovaním ako iné požiadavky.</li>
+  <li>Pri zobrazení mapy a vyhľadávaní miest appka posiela súradnice/vyhľadávací text <strong>priamo z
+      vášho zariadenia na Mapbox</strong> (samostatná americká spoločnosť) — ide o súčasť použitia
+      Mapbox SDK/API na vykreslenie mapy a vyhľadávanie. Pozri bod 5 a 6 nižšie k medzinárodnému prenosu.</li>
+  <li>Na Open-Meteo (poskytovateľ počasia) sa <strong>nikdy</strong> neposiela vaša poloha priamo — komunikuje
+      s ním výhradne náš backend, a to len s hrubým stredom zdieľanej mapovej bunky, nikdy s vašou identitou.</li>
+  <li>Posledných 5 vyhľadaných miest sa ukladá <strong>len lokálne vo vašom zariadení</strong> (nie na našich
+      serveroch) pre rýchlejšie opätovné vyhľadanie.</li>
+  <li>Pri SOS volaní appka len otvorí bežný telefónny vytáčač (112 / Horská záchranná služba) — vašu
+      polohu neposiela záchranárom automaticky.</li>
+</ul>
+<div class="table-scroll">
+<table>
+<tr><th>Účel</th><th>Právny základ</th></tr>
+<tr><td>Mapa, počasie, lavínový bulletin pre vaše miesto, plánovanie trasy, vyhľadávanie v okolí</td>
+<td>Plnenie zmluvy (čl. 6 ods. 1 písm. b) GDPR) — ide o jadrovú funkcionalitu appky, bez polohy tieto
+konkrétne funkcie nefungujú</td></tr>
+</table>
+</div>
+
+<h3>3.3 Spätná väzba (feedback formulár)</h3>
+<p>Ak v appke dobrovoľne odošlete hlásenie (bug, návrh, "dáta vypadajú nesprávne", iné), uložíme:</p>
+<ul>
+  <li>vaše <code>uid</code> (identifikátor účtu),</li>
+  <li>typ a text hlásenia,</li>
+  <li>voliteľne kontaktný email, ktorý sám zadáte,</li>
+  <li>technický kontext pre ladenie: verziu appky, verziu Androidu, model zariadenia, jazyk appky,
+      poslednú mapovú bunku (<code>regionId</code> — nie presnú polohu) a posledný zachytený chybový kód.</li>
+</ul>
+<div class="table-scroll">
+<table>
+<tr><th>Účel</th><th>Právny základ</th></tr>
+<tr><td>Spracovanie vášho hlásenia, diagnostika chyby</td>
+<td>Súhlas (čl. 6 ods. 1 písm. a) GDPR) — odoslanie formulára je váš dobrovoľný krok, súhlas môžete
+kedykoľvek odvolať tak, že napíšete na kontaktný email a požiadate o vymazanie konkrétneho hlásenia</td></tr>
+</table>
+</div>
+
+<h3>3.4 Bezpečnostný/anti-abuse signál</h3>
+<p>Používame <strong>Google Play Integrity</strong> (cez Firebase App Check) na overenie, že požiadavky na
+náš backend prichádzajú zo skutočnej, neupravenej appky — bežné anti-abuse opatrenie. Zahŕňa výmenu
+integritných signálov medzi vaším zariadením a Googlom, riadenú vlastnými zásadami Googlu.</p>
+<div class="table-scroll">
+<table>
+<tr><th>Účel</th><th>Právny základ</th></tr>
+<tr><td>Ochrana backendu proti zneužitiu/podvodným požiadavkám</td>
+<td>Oprávnený záujem (čl. 6 ods. 1 písm. f) GDPR) — bezpečnosť sietí a informačných systémov</td></tr>
+</table>
+</div>
+
+<h3>3.5 Čo NEzbierame</h3>
+<ul>
+  <li>Žiadny analytický ani crash-reporting SDK (žiadne Firebase Analytics, žiadny Crashlytics).</li>
+  <li>Žiadne reklamné identifikátory, žiadne reklamné SDK.</li>
+  <li>Žiadnu polohu na pozadí appky.</li>
+  <li>Žiadnu platbu — appka je zadarmo, nemá in-app nákupy.</li>
+</ul>
+
+<h3>3.6 Štandardné infraštruktúrne logovanie</h3>
+<p>Ako takmer každá appka hostovaná v cloude, aj náš backend (Google Firebase/Cloud Functions a náš
+self-hosted navigačný server na Cloud Run) automaticky zaznamenáva technické metadáta požiadaviek
+(napr. IP adresa, časová značka, cesta/parametre požiadavky, chybové hlásenia) na účely bezpečnosti
+a ladenia — podľa štandardných zásad Google Cloud. AlpinIO toto nekonfiguruje samostatne ani nepoužíva
+na profilovanie.</p>
+<div class="note">
+Presnú dobu uchovávania týchto technických logov (Google Cloud Logging) sme si v tomto audite
+nezávisle neoveril vo vlastnom nastavení projektu — predpokladaná je defaultná lehota Google Cloud
+(typicky 30 dní), nie vlastná konfigurácia. Over v Google Cloud Console → Logging, ak potrebuješ presné číslo.
+</div>
+
+<h2>4. Komu údaje odovzdávame</h2>
+<div class="table-scroll">
+<table>
+<tr><th>Príjemca</th><th>Čo dostane</th><th>Prečo</th><th>Umiestnenie</th></tr>
+<tr><td>Google Firebase / Google Cloud</td>
+<td>Účtové údaje, poloha (dočasne, na výpočet mapovej bunky), bezpečnostné anti-abuse signály,
+štandardné infra logy</td>
+<td>Hosting, autentifikácia, databáza (Firestore), úložisko fotiek (Storage), serverová logika
+(Cloud Functions)</td>
+<td>Firestore: <code>europe-central2</code> (Varšava). Cloud Functions + náš navigačný server (Cloud Run):
+<code>europe-west1</code> (Frankfurt). Presné umiestnenie Firebase Storage (profilové fotky) sme
+v kóde nevedeli nezávisle overiť — over v Firebase Console.</td></tr>
+<tr><td>Mapbox, Inc.</td>
+<td>Súradnice/vyhľadávací text priamo z vášho zariadenia</td>
+<td>Vykreslenie mapy, vyhľadávanie miest</td>
+<td>Americká spoločnosť — pozri bod 6 nižšie k medzinárodnému prenosu</td></tr>
+<tr><td>Open-Meteo</td>
+<td>Len hrubý stred zdieľanej mapovej bunky (nikdy vašu identitu ani presnú polohu), sťahované
+výhradne naším backendom</td>
+<td>Predpoveď počasia</td>
+<td>Presné umiestnenie servera sme nezávisle neoverili — pozri bod 6</td></tr>
+</table>
+</div>
+<p>Vaše údaje <strong>nepredávame</strong> tretím stranám na ich vlastné účely, nezdieľame ich s inzerentmi
+ani predajcami dát.</p>
+
+<h2>5. Medzinárodný prenos údajov</h2>
+<p>Infraštruktúra, ktorú sme pre tento projekt explicitne nakonfigurovali (Firestore, Cloud Functions,
+náš self-hosted navigačný server), beží v regiónoch EÚ (Varšava, Frankfurt). Mimo toho:</p>
+<ul>
+  <li><strong>Mapbox, Inc.</strong> je spoločnosť so sídlom v USA. Keď appka komunikuje s Mapboxom priamo
+  z vášho zariadenia, ide pravdepodobne o prenos osobných údajov mimo EÚ/EHP. Z nášho kódu sa nedá
+  overiť, kde presne Mapbox dáta pre európskych používateľov spracúva, ani aké konkrétne záruky
+  (napr. štandardné zmluvné doložky) používa — odporúčame pozrieť si vlastnú politiku ochrany
+  osobných údajov Mapboxu.</li>
+  <li><strong>Open-Meteo</strong> — jurisdikciu a presné umiestnenie servera sme z kódu nevedeli
+  nezávisle overiť.</li>
+</ul>
+<div class="note">
+Tento bod je oznacený ako neoverený, nie domnienka predstieraná ako istota — pred finálnym publikovaním
+politiky odporúčame u oboch poskytovateľov priamo potvrdiť spracovateľské umiestnenie a právny
+mechanizmus prenosu.
+</div>
+
+<h2>6. Ako dlho údaje uchovávame</h2>
+<div class="table-scroll">
+<table>
+<tr><th>Kategória</th><th>Doba uchovávania</th></tr>
+<tr><td>Účtové údaje (email, username, profil)</td><td>Dokým existuje váš účet — vymazanie je okamžité
+(bod 8)</td></tr>
+<tr><td>Spätná väzba (feedback)</td><td>V súčasnosti bez automatického mazania — zostáva uložená natrvalo,
+pokiaľ nepožiadate o vymazanie konkrétneho hlásenia emailom. <strong>Zmazanie účtu feedback hlásenia
+automaticky nevymaže</strong> — ide o samostatný záznam.</td></tr>
+<tr><td>Zdieľaná regionálna cache počasia/lavín (neosobné dáta, viazané na mapovú bunku, nie na účet)</td>
+<td>Po 14 dňoch bez návštevy danej oblasti sa prestane automaticky aktualizovať (nie zmazať) — zostáva
+v databáze, len sa už neobnovuje, pokiaľ sa do oblasti niekto nevráti</td></tr>
+<tr><td>Štandardné infraštruktúrne logy (IP, časová značka, chyby)</td>
+<td>Defaultná lehota Google Cloud Logging — nebola u nás vlastná konfigurácia nezávisle overená</td></tr>
+<tr><td>Vyhľadávacia história (posledných 5 miest)</td>
+<td>Uložená len na vašom zariadení, kým appku neodinštalujete alebo si nevymažete jej dáta —
+nikdy sa neposiela na naše servery</td></tr>
+</table>
+</div>
+
+<h2>7. Vaše práva</h2>
+<p>Podľa GDPR máte právo na:</p>
+<ul>
+  <li>prístup k svojim osobným údajom,</li>
+  <li>opravu nesprávnych údajov,</li>
+  <li>vymazanie ("právo na zabudnutie") — pozri bod 8,</li>
+  <li>obmedzenie spracúvania,</li>
+  <li>prenositeľnosť údajov,</li>
+  <li>námietku proti spracúvaniu na základe oprávneného záujmu,</li>
+  <li>kedykoľvek odvolať súhlas (týka sa spätnej väzby, bod 3.3) bez toho, aby to ovplyvnilo zákonnosť
+  spracúvania pred odvolaním.</li>
+</ul>
+<p>Tieto práva si môžete uplatniť napísaním na <a href="mailto:support.alpinio@gmail.com">support.alpinio@gmail.com</a>.</p>
+<p>Ak máte pocit, že vaše údaje spracúvame v rozpore s GDPR, máte právo podať sťažnosť na:</p>
+<div class="card">
+<strong>Úrad na ochranu osobných údajov Slovenskej republiky</strong><br>
+Hraničná 12, 820 07 Bratislava 27
+</div>
+<div class="note">
+Presný aktuálny kontakt (email/web/telefón) úradu sme v tejto session nezávisle neoverili naživo —
+over si ho priamo na webe úradu pred publikovaním, aby bol odkaz aktuálny.
+</div>
+
+<h2>8. Vymazanie účtu a údajov</h2>
+<p>Zmazanie účtu je zabudované priamo v appke: <strong>Nastavenia → Profil → Zmazať účet</strong>.
+Je okamžité, bez čakacej doby. Podrobný postup — vrátane alternatívy pre tých, čo appku už
+odinštalovali — nájdete na samostatnej stránke:</p>
+<p><a href="delete_account.html">Ako zmazať účet AlpinIO →</a></p>
+
+<h2>9. Automatizované rozhodovanie</h2>
+<p>Appka nerobí žiadne automatizované rozhodnutie s právnym účinkom na vás. Zobrazovaný lavínový stupeň
+je priamo prevzaté dáta z publikovaného bulletinu SLP/HZS, nie automatizované rozhodnutie o vás osobne.
+Appka interne počíta aj vlastné rizikové skóre (MRI), to sa však vo verzii V1 nikde nezobrazuje
+(kalibrácia ešte nie je hotová) a neriadi žiadnu automatizovanú akciu.</p>
+
+<h2>10. Zmeny týchto zásad</h2>
+<p>Túto stránku aktualizujeme, keď sa vecne zmení, čo appka zbiera alebo komu to odovzdáva, a dátum
+v päte upravíme.</p>
+
+<footer>
+Posledná aktualizácia: 8. októbra 2026 · AlpinIO, Samuel Martyňuk ·
+<a href="mailto:support.alpinio@gmail.com">support.alpinio@gmail.com</a>
+</footer>
+
+</div>
+<!-- =========================== /SLOVAK =========================== -->
+
+
+<!-- ============================= ENGLISH ============================= -->
+<div data-lang="en">
+
+<h1>Privacy Policy — AlpinIO</h1>
+<p class="byline">Last updated: October 8, 2026</p>
+
+<h2>1. Who processes your data</h2>
+<p>
+The data controller is:<br>
+<strong>Samuel Martyňuk</strong><br>
+Contact email: <a href="mailto:support.alpinio@gmail.com">support.alpinio@gmail.com</a>
+</p>
+<div class="note">
+The controller is an individual (the app's developer), not a registered company. A billing/correspondence
+address and business registration number (if the app is ever run through a registered business entity)
+will be added here once available.
+</div>
+
+<h2>2. What AlpinIO is</h2>
+<p>
+AlpinIO is a mountain safety and decision-support app for the Tatras. It shows avalanche bulletins
+(SLP/HZS), weather, and a hiking map with navigation. <strong>The app informs — you make the decision
+in the field.</strong>
+</p>
+
+<h2>3. What data we collect, for what purpose, and on what legal basis</h2>
+
+<h3>3.1 Account data</h3>
+<p>When you register (email/password or Google sign-in) we store: email address, username, display name,
+phone number (optional), profile photo (optional), country (chosen from a list, not derived from your
+location), app language preference, and account timestamps.</p>
+<p>If you sign in with Google, Firebase receives your name, email, and profile photo URL from Google as
+part of a standard OAuth flow (since September 2026 the app uses Firebase's own webview-based OAuth
+instead of a separate Google plugin; the data scope is the same: <code>email</code> + <code>profile</code>).</p>
+<div class="table-scroll">
+<table>
+<tr><th>Purpose</th><th>Legal basis</th></tr>
+<tr><td>Account creation and management, sign-in, showing your public profile to others (username, photo)</td>
+<td>Performance of a contract (GDPR Art. 6(1)(b)) — the app requires an account in V1, it doesn't work
+without one</td></tr>
+</table>
+</div>
+<p>Email and username are required. Phone and photo are optional — not providing them does not limit any
+feature of the app.</p>
+
+<h3>3.2 Location</h3>
+<p>The app requests <strong>precise, foreground-only ("while in use") location</strong> — it does not
+request background location (the permission is only commented out, not active, in
+<code>AndroidManifest.xml</code>).</p>
+<p>Your location is used to:</p>
+<ul>
+  <li>show your position on the map,</li>
+  <li>center weather and the avalanche bulletin on your location,</li>
+  <li>calculate hiking routes and search "nearby",</li>
+  <li>pick the nearest of 3 elevation bands (valley/mid/ridge) when showing weather — your GPS altitude
+      (<code>Position.altitude</code>) is used purely on your device for this and is never sent to our
+      backend.</li>
+</ul>
+<p><strong>Where your location actually goes:</strong></p>
+<ul>
+  <li>Our own Cloud Functions (<code>europe-west1</code>, Frankfurt) receive your coordinates to resolve
+      which ~5 km map cell you're in. We store the shared cell data, not a history of your personal
+      location.</li>
+  <li>When planning a route, the app sends start/end/waypoint coordinates to our
+      <strong>own self-hosted routing server (BRouter, Cloud Run, <code>europe-west1</code>)</strong>.
+      That server has no user database or authentication of its own — no client key is sent, the
+      endpoint is simply reachable only by the app. Google Cloud Run logs standard HTTP request metadata
+      by default (including the request URL, which contains the coordinates) in the same way described
+      in section 3.6 below — these coordinates pass through the same standard infrastructure logging as
+      any other request.</li>
+  <li>When rendering the map or searching for places, the app sends coordinates/search text
+      <strong>directly from your device to Mapbox</strong> (a separate US company) — this is inherent to
+      using the Mapbox SDK/API for map rendering and place search. See sections 5 and 6 below on
+      international transfer.</li>
+  <li>Your location is <strong>never</strong> sent directly to Open-Meteo (our weather provider) — only
+      our backend talks to it, and only with the coarse center of a shared map cell, never your identity.</li>
+  <li>Your last 5 searched places are stored <strong>only locally on your device</strong> (not on our
+      servers) so you can find them again faster.</li>
+  <li>During an SOS call, the app only opens your phone's normal dialer (112 / Mountain Rescue) — it does
+      not transmit your location to rescuers automatically.</li>
+</ul>
+<div class="table-scroll">
+<table>
+<tr><th>Purpose</th><th>Legal basis</th></tr>
+<tr><td>Map, weather, avalanche bulletin for your location, route planning, nearby search</td>
+<td>Performance of a contract (GDPR Art. 6(1)(b)) — this is core app functionality; these specific
+features do not work without location</td></tr>
+</table>
+</div>
+
+<h3>3.3 Feedback submissions</h3>
+<p>If you voluntarily submit a report in the app (bug, suggestion, "this data looks wrong", other), we
+store:</p>
+<ul>
+  <li>your <code>uid</code> (account identifier),</li>
+  <li>the report type and text,</li>
+  <li>an optional contact email you type in yourself,</li>
+  <li>technical context for debugging: app version, Android version, device model, app language, your
+      last map cell (<code>regionId</code> — not your precise location), and the last captured error code.</li>
+</ul>
+<div class="table-scroll">
+<table>
+<tr><th>Purpose</th><th>Legal basis</th></tr>
+<tr><td>Handling your report, debugging</td>
+<td>Consent (GDPR Art. 6(1)(a)) — submitting the form is a voluntary act; you can withdraw consent at any
+time by emailing us and asking for a specific report to be deleted</td></tr>
+</table>
+</div>
+
+<h3>3.4 Security / anti-abuse signal</h3>
+<p>We use <strong>Google Play Integrity</strong> (via Firebase App Check) to verify that requests to our
+backend come from a genuine, unmodified copy of the app — a standard anti-abuse measure. It involves an
+exchange of integrity signals between your device and Google, governed by Google's own policies.</p>
+<div class="table-scroll">
+<table>
+<tr><th>Purpose</th><th>Legal basis</th></tr>
+<tr><td>Protecting the backend against abuse/fraudulent requests</td>
+<td>Legitimate interest (GDPR Art. 6(1)(f)) — security of network and information systems</td></tr>
+</table>
+</div>
+
+<h3>3.5 What we do NOT collect</h3>
+<ul>
+  <li>No analytics or crash-reporting SDK (no Firebase Analytics, no Crashlytics).</li>
+  <li>No advertising identifiers, no ad SDKs.</li>
+  <li>No background location.</li>
+  <li>No payments — the app is free, no in-app purchases.</li>
+</ul>
+
+<h3>3.6 Standard infrastructure logging</h3>
+<p>Like virtually any cloud-hosted app, our backend (Google Firebase/Cloud Functions and our self-hosted
+routing server on Cloud Run) automatically logs technical request metadata (e.g. IP address, timestamp,
+request path/parameters, error messages) for security and debugging, per Google Cloud's standard
+policies. AlpinIO does not configure this separately or use it for profiling.</p>
+<div class="note">
+We did not independently verify the exact retention period of these technical logs (Google Cloud
+Logging) in our own project settings during this review — assumed to be Google Cloud's default (typically
+30 days), not a custom configuration. Check Google Cloud Console → Logging if you need an exact figure.
+</div>
+
+<h2>4. Who we share data with</h2>
+<div class="table-scroll">
+<table>
+<tr><th>Recipient</th><th>What they get</th><th>Why</th><th>Location</th></tr>
+<tr><td>Google Firebase / Google Cloud</td>
+<td>Account data, location (transiently, to resolve a map cell), anti-abuse security signals, standard
+infra logs</td>
+<td>Hosting, authentication, database (Firestore), photo storage, server logic (Cloud Functions)</td>
+<td>Firestore: <code>europe-central2</code> (Warsaw). Cloud Functions + our routing server (Cloud Run):
+<code>europe-west1</code> (Frankfurt). We could not independently confirm the exact Firebase Storage
+(profile photo) region from code — check the Firebase Console.</td></tr>
+<tr><td>Mapbox, Inc.</td>
+<td>Coordinates/search text directly from your device</td>
+<td>Map rendering, place search</td>
+<td>US company — see section 6 below on international transfer</td></tr>
+<tr><td>Open-Meteo</td>
+<td>Only the coarse center of a shared map cell (never your identity or exact location), fetched
+exclusively by our backend</td>
+<td>Weather forecast</td>
+<td>Exact server location not independently confirmed — see section 6</td></tr>
+</table>
+</div>
+<p>We do <strong>not</strong> sell your data to third parties for their own purposes, and we do not share
+it with advertisers or data brokers.</p>
+
+<h2>5. International data transfers</h2>
+<p>The infrastructure we explicitly configured for this project (Firestore, Cloud Functions, our
+self-hosted routing server) runs in EU regions (Warsaw, Frankfurt). Beyond that:</p>
+<ul>
+  <li><strong>Mapbox, Inc.</strong> is a US-based company. When the app talks to Mapbox directly from your
+  device, this likely constitutes a transfer of personal data outside the EU/EEA. We cannot confirm from
+  our code exactly where Mapbox processes data for European users, nor which specific safeguards (e.g.
+  standard contractual clauses) apply — please refer to Mapbox's own privacy policy.</li>
+  <li><strong>Open-Meteo</strong> — we could not independently confirm its jurisdiction or exact server
+  location from our code.</li>
+</ul>
+<div class="note">
+This section is flagged as unverified, not presented as a confident assertion — before finalizing this
+policy for publication, confirm the processing location and transfer mechanism directly with both
+providers.
+</div>
+
+<h2>6. How long we keep data</h2>
+<div class="table-scroll">
+<table>
+<tr><th>Category</th><th>Retention</th></tr>
+<tr><td>Account data (email, username, profile)</td><td>As long as your account exists — deletion is
+immediate (section 8)</td></tr>
+<tr><td>Feedback submissions</td><td>Currently no automatic deletion — kept indefinitely unless you
+request a specific report be deleted by email. <strong>Deleting your account does not automatically
+delete feedback reports</strong> — they are a separate record.</td></tr>
+<tr><td>Shared regional weather/avalanche cache (non-personal, tied to a map cell, not an account)</td>
+<td>After 14 days with no visits to that area it stops auto-refreshing (not deleted) — it remains in the
+database, just stale, until someone returns to that area</td></tr>
+<tr><td>Standard infrastructure logs (IP, timestamp, errors)</td>
+<td>Google Cloud Logging's default retention — we did not independently verify a custom configuration</td></tr>
+<tr><td>Search history (last 5 places)</td>
+<td>Stored only on your device until you uninstall the app or clear its data — never sent to our servers</td></tr>
+</table>
+</div>
+
+<h2>7. Your rights</h2>
+<p>Under GDPR you have the right to:</p>
+<ul>
+  <li>access your personal data,</li>
+  <li>rectify inaccurate data,</li>
+  <li>erasure ("right to be forgotten") — see section 8,</li>
+  <li>restrict processing,</li>
+  <li>data portability,</li>
+  <li>object to processing based on legitimate interest,</li>
+  <li>withdraw consent at any time (for feedback, section 3.3) without affecting the lawfulness of
+  processing before withdrawal.</li>
+</ul>
+<p>You can exercise these rights by emailing <a href="mailto:support.alpinio@gmail.com">support.alpinio@gmail.com</a>.</p>
+<p>If you believe we are processing your data in breach of GDPR, you have the right to lodge a complaint with:</p>
+<div class="card">
+<strong>Office for Personal Data Protection of the Slovak Republic</strong><br>
+(Úrad na ochranu osobných údajov Slovenskej republiky)<br>
+Hraničná 12, 820 07 Bratislava 27, Slovakia
+</div>
+<div class="note">
+We did not independently re-verify the authority's current contact details (email/website/phone) live
+during this review — confirm them on the authority's own website before publishing, so the reference
+stays current.
+</div>
+
+<h2>8. Account and data deletion</h2>
+<p>Account deletion is built into the app: <strong>Settings → Profile → Delete Account</strong>. It is
+immediate, with no waiting period. For the full procedure — including an alternative for anyone who has
+already uninstalled the app — see the dedicated page:</p>
+<p><a href="delete_account.html">How to delete your AlpinIO account →</a></p>
+
+<h2>9. Automated decision-making</h2>
+<p>The app does not make any automated decision with a legal effect on you. The avalanche danger level
+shown is published bulletin data (SLP/HZS) taken as-is, not an automated decision about you personally.
+The app also internally computes its own risk score (MRI), but this is not shown anywhere in V1
+(calibration isn't finished yet) and does not drive any automated action.</p>
+
+<h2>10. Changes to this policy</h2>
+<p>We'll update this page when what the app collects or who it's shared with changes materially, and
+update the date in the footer.</p>
+
+<footer>
+Last updated: October 8, 2026 · AlpinIO, Samuel Martyňuk ·
+<a href="mailto:support.alpinio@gmail.com">support.alpinio@gmail.com</a>
+</footer>
+
+</div>
+<!-- =========================== /ENGLISH =========================== -->
+
+</div>
+
+<script>
+  function setLang(lang) {
+    document.documentElement.setAttribute('data-active', lang);
+    document.documentElement.setAttribute('lang', lang);
+    document.getElementById('btn-sk').setAttribute('aria-pressed', lang === 'sk' ? 'true' : 'false');
+    document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en' ? 'true' : 'false');
+    try { localStorage.setItem('alpinio_lang', lang); } catch (e) {}
+  }
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem('alpinio_lang'); } catch (e) {}
+    var lang = saved || (navigator.language && navigator.language.toLowerCase().indexOf('sk') === 0 ? 'sk' : 'en');
+    setLang(lang === 'en' ? 'en' : 'sk');
+  })();
+</script>
+
+</body>
+</html>

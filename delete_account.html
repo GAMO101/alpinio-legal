@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AlpinIO — Delete account / Zmazanie účtu</title>
+<style>
+  :root {
+    --bg: #F7FAFC;
+    --surface: #FFFFFF;
+    --border: #E6EDF3;
+    --text: #0B1220;
+    --text-muted: #51606E;
+    --accent: #2196C8;
+    --warn-bg: #FFF6E5;
+    --warn-border: #F0C36D;
+    --warn-text: #7A5300;
+    --danger-bg: #FDECEC;
+    --danger-border: #E59A9A;
+    --danger-text: #8A1F1F;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0B1220;
+      --surface: #121B2B;
+      --border: #223349;
+      --text: #EAF2F8;
+      --text-muted: #9FB3C8;
+      --accent: #57D2FF;
+      --warn-bg: #2A2410;
+      --warn-border: #6B5717;
+      --warn-text: #F0C36D;
+      --danger-bg: #2A1414;
+      --danger-border: #6B2B2B;
+      --danger-text: #F09C9C;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 24px 18px 64px; }
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 18px;
+  }
+  .topbar-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .lang-btn {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .lang-btn[aria-pressed="true"] { background: var(--accent); color: #04121A; border-color: var(--accent); }
+  h1 { font-size: 25px; margin: 8px 0 4px; }
+  h2 { font-size: 17px; margin: 30px 0 10px; padding-top: 6px; border-top: 1px solid var(--border); }
+  h2:first-of-type { border-top: none; padding-top: 0; }
+  p { margin: 10px 0; }
+  .byline { color: var(--text-muted); font-size: 14px; margin-bottom: 18px; }
+  ol, ul { padding-left: 22px; margin: 8px 0; }
+  li { margin: 6px 0; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 14px 0;
+  }
+  .danger {
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-border);
+    color: var(--danger-text);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 14px;
+    margin: 14px 0;
+    font-weight: 600;
+  }
+  .note {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-border);
+    color: var(--warn-text);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    margin: 10px 0;
+  }
+  a { color: var(--accent); }
+  code {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1px 5px;
+    border-radius: 5px;
+    font-size: 12.5px;
+  }
+  footer {
+    margin-top: 44px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 12.5px;
+  }
+  [data-lang] { display: none; }
+  html[data-active="sk"] [data-lang="sk"] { display: block; }
+  html[data-active="en"] [data-lang="en"] { display: block; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <button class="lang-btn" id="btn-sk" onclick="setLang('sk')" aria-pressed="true">SK</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')" aria-pressed="false">EN</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ============================= SLOVAK ============================= -->
+<div data-lang="sk">
+
+<h1>Ako zmazať účet AlpinIO</h1>
+<p class="byline">Posledná aktualizácia: 8. októbra 2026</p>
+
+<p>Svoj účet AlpinIO a s ním spojené údaje môžeš natrvalo zmazať priamo v appke — nemusíš kontaktovať
+podporu. Táto stránka je verejná a zrozumiteľná aj bez toho, aby si appku mal/-a nainštalovanú — napríklad
+ak si ju už odinštaloval/-a a chceš vedieť, čo so svojimi dátami ešte môžeš urobiť.</p>
+
+<h2>V appke (odporúčaný spôsob)</h2>
+<ol>
+  <li>Otvor appku a prihlás sa.</li>
+  <li>Prejdi na <strong>Nastavenia → Profil</strong>.</li>
+  <li>Zíď úplne dole a klikni na <strong>Zmazať účet</strong>.</li>
+  <li>Napíš svoje používateľské meno na potvrdenie a znova zadaj svoje heslo (alebo potvrď cez Google,
+      ak si sa tak prihlasoval/-a).</li>
+  <li>Klikni na <strong>Natrvalo zmazať môj účet</strong>.</li>
+</ol>
+<div class="danger">
+Účet sa zmaže okamžite. Neexistuje čakacia doba ani možnosť vrátenia späť.
+</div>
+
+<h2>Čo sa zmaže</h2>
+<ul>
+  <li>Tvoj účtový dokument (email, používateľské meno, zobrazované meno, telefónne číslo ak bolo zadané,
+      krajina, jazykové nastavenie)</li>
+  <li>Tvoj verejný profil (meno, fotka viditeľná ostatným používateľom)</li>
+  <li>Tvoja profilová fotka v našom úložisku</li>
+  <li>Rezervácia tvojho používateľského mena — od tej chvíle si ho môže zaregistrovať ktokoľvek iný</li>
+  <li>Tvoj prihlasovací záznam (Firebase Authentication) — po zmazaní sa už nedá prihlásiť pod starými
+      prihlasovacími údajmi</li>
+</ul>
+
+<h2>Čo sa NEzmaže automaticky</h2>
+<ul>
+  <li><strong>Spätná väzba, ktorú si v appke odoslal/-a</strong> (bug reporty, návrhy, hlásenia "dáta
+      vypadajú nesprávne") — v súčasnosti sa nemaže automaticky spolu s účtom, zostáva ako samostatný
+      záznam. Ak chceš vymazať aj konkrétne hlásenie, napíš nám (kontakt nižšie) a urobíme to manuálne.</li>
+  <li><strong>Zdieľaná regionálna cache počasia a lavínových dát</strong> — toto nie sú tvoje osobné
+      údaje, je to dáta pre celú ~5 km mapovú bunku, zdieľaná všetkými používateľmi v danej oblasti,
+      takže sa neviaže na tvoj konkrétny účet a nedáva zmysel ju mazať pri zmazaní jedného účtu.</li>
+</ul>
+<p>Podrobnosti o oboch bodoch (účel, doba uchovávania) nájdeš v
+<a href="privacy_policy.html">Zásadách ochrany osobných údajov</a>.</p>
+
+<h2>Nemôžeš otvoriť appku?</h2>
+<p>Ak sa nevieš prihlásiť alebo appku použiť (napr. je odinštalovaná, zabudol/-a si heslo bez možnosti
+obnovy, alebo sa dostal/-a mimo účtu z iného dôvodu), napíš na</p>
+<div class="card">
+<a href="mailto:support.alpinio@gmail.com">support.alpinio@gmail.com</a>
+</div>
+<p>z <strong>tej istej emailovej adresy</strong>, ktorá je na tvojom účte, a požiadaj o zmazanie. Overíme
+tvoju identitu a účet zmažeme manuálne <strong>do 30 dní</strong> od doručenia žiadosti.</p>
+
+<footer>
+Posledná aktualizácia: 8. októbra 2026 · AlpinIO, Samuel Martyňuk ·
+<a href="mailto:support.alpinio@gmail.com">support.alpinio@gmail.com</a>
+</footer>
+
+</div>
+<!-- =========================== /SLOVAK =========================== -->
+
+
+<!-- ============================= ENGLISH ============================= -->
+<div data-lang="en">
+
+<h1>How to delete your AlpinIO account</h1>
+<p class="byline">Last updated: October 8, 2026</p>
+
+<p>You can permanently delete your AlpinIO account and its associated data directly in the app — no
+need to contact support. This page is public and understandable even without the app installed — for
+example if you've already uninstalled it and want to know what else you can do with your data.</p>
+
+<h2>In the app (recommended)</h2>
+<ol>
+  <li>Open the app and sign in.</li>
+  <li>Go to <strong>Settings → Profile</strong>.</li>
+  <li>Scroll to the bottom and tap <strong>Delete Account</strong>.</li>
+  <li>Type your username to confirm, and re-enter your password (or confirm with Google, if that's how
+      you signed in).</li>
+  <li>Tap <strong>Delete my account permanently</strong>.</li>
+</ol>
+<div class="danger">
+Your account is deleted immediately. There is no waiting period or "undo" window.
+</div>
+
+<h2>What gets deleted</h2>
+<ul>
+  <li>Your account document (email, username, display name, phone number if provided, country,
+      language preference)</li>
+  <li>Your public profile (name, photo visible to other users)</li>
+  <li>Your profile photo file in our storage</li>
+  <li>Your username reservation — anyone else can register it going forward</li>
+  <li>Your sign-in record (Firebase Authentication) — you can no longer sign in with your old
+      credentials after this</li>
+</ul>
+
+<h2>What is NOT automatically deleted</h2>
+<ul>
+  <li><strong>Feedback you submitted in the app</strong> (bug reports, suggestions, "this data looks
+      wrong" reports) — currently not deleted automatically together with your account; it remains as a
+      separate record. If you also want a specific report deleted, email us (contact below) and we'll
+      do it manually.</li>
+  <li><strong>Shared regional weather/avalanche cache data</strong> — this is not your personal data; it
+      is data for an entire ~5 km map cell, shared by everyone in that area, so it isn't tied to your
+      specific account and doesn't make sense to erase when one account is deleted.</li>
+</ul>
+<p>Details on both (purpose, retention) are in the
+<a href="privacy_policy.html">Privacy Policy</a>.</p>
+
+<h2>Can't open the app?</h2>
+<p>If you're unable to sign in or use the app (e.g. it's uninstalled, you've lost your password with no
+recovery option, or you're otherwise locked out), email</p>
+<div class="card">
+<a href="mailto:support.alpinio@gmail.com">support.alpinio@gmail.com</a>
+</div>
+<p>from the <strong>same email address</strong> that's on your account, and request deletion. We'll
+verify your identity and delete the account manually <strong>within 30 days</strong> of receiving your
+request.</p>
+
+<footer>
+Last updated: October 8, 2026 · AlpinIO, Samuel Martyňuk ·
+<a href="mailto:support.alpinio@gmail.com">support.alpinio@gmail.com</a>
+</footer>
+
+</div>
+<!-- =========================== /ENGLISH =========================== -->
+
+</div>
+
+<script>
+  function setLang(lang) {
+    document.documentElement.setAttribute('data-active', lang);
+    document.documentElement.setAttribute('lang', lang);
+    document.getElementById('btn-sk').setAttribute('aria-pressed', lang === 'sk' ? 'true' : 'false');
+    document.getElementById('btn-en').setAttribute('aria-pressed', lang === 'en' ? 'true' : 'false');
+    try { localStorage.setItem('alpinio_lang', lang); } catch (e) {}
+  }
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem('alpinio_lang'); } catch (e) {}
+    var lang = saved || (navigator.language && navigator.language.toLowerCase().indexOf('sk') === 0 ? 'sk' : 'en');
+    setLang(lang === 'en' ? 'en' : 'sk');
+  })();
+</script>
+
+</body>
+</html>
