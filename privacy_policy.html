@@ -106,6 +106,16 @@
     font-size: 13.5px;
     margin: 10px 0;
   }
+  .todo {
+    display: inline-block;
+    background: repeating-linear-gradient(45deg, var(--warn-bg), var(--warn-bg) 6px, var(--surface) 6px, var(--surface) 12px);
+    border: 1px dashed var(--warn-border);
+    color: var(--warn-text);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 12.5px;
+  }
   .table-scroll { overflow-x: auto; margin: 12px 0; }
   table {
     width: 100%;
@@ -157,7 +167,7 @@
 <div data-lang="sk">
 
 <h1>Zásady ochrany osobných údajov — AlpinIO</h1>
-<p class="byline">Posledná aktualizácia: 8. októbra 2026</p>
+<p class="byline">Posledná aktualizácia: 10. októbra 2026</p>
 
 <h2>1. Kto spracúva vaše údaje</h2>
 <p>
@@ -281,9 +291,10 @@ self-hosted navigačný server na Cloud Run) automaticky zaznamenáva technické
 a ladenia — podľa štandardných zásad Google Cloud. AlpinIO toto nekonfiguruje samostatne ani nepoužíva
 na profilovanie.</p>
 <div class="note">
-Presnú dobu uchovávania týchto technických logov (Google Cloud Logging) sme si v tomto audite
-nezávisle neoveril vo vlastnom nastavení projektu — predpokladaná je defaultná lehota Google Cloud
-(typicky 30 dní), nie vlastná konfigurácia. Over v Google Cloud Console → Logging, ak potrebuješ presné číslo.
+Overené priamo v Google Cloud Console → Logging (projekt <code>snow-c973e</code>): používa sa defaultný
+log bucket <code>_Default</code> s retenciou <strong>30 dní</strong> — vlastná (predĺžená) retencia nie je
+nastavená. (Bucket <code>_Required</code> s retenciou 400 dní obsahuje len povinné auditné záznamy, ktoré
+automaticky vyžaduje Google Cloud, nie samostatnú konfiguráciu appky.)
 </div>
 
 <h2>4. Komu údaje odovzdávame</h2>
@@ -296,17 +307,17 @@ nezávisle neoveril vo vlastnom nastavení projektu — predpokladaná je defaul
 <td>Hosting, autentifikácia, databáza (Firestore), úložisko fotiek (Storage), serverová logika
 (Cloud Functions)</td>
 <td>Firestore: <code>europe-central2</code> (Varšava). Cloud Functions + náš navigačný server (Cloud Run):
-<code>europe-west1</code> (Frankfurt). Presné umiestnenie Firebase Storage (profilové fotky) sme
-v kóde nevedeli nezávisle overiť — over v Firebase Console.</td></tr>
+<code>europe-west1</code> (Frankfurt). Firebase Storage (profilové fotky):
+<span class="todo">DOPLNIŤ — región overiť vo Firebase Console</span>.</td></tr>
 <tr><td>Mapbox, Inc.</td>
 <td>Súradnice/vyhľadávací text priamo z vášho zariadenia</td>
 <td>Vykreslenie mapy, vyhľadávanie miest</td>
-<td>Americká spoločnosť — pozri bod 6 nižšie k medzinárodnému prenosu</td></tr>
-<tr><td>Open-Meteo</td>
+<td>Americká spoločnosť — pozri bod 5 nižšie k medzinárodnému prenosu</td></tr>
+<tr><td>Open-Meteo (OpenMeteo GmbH)</td>
 <td>Len hrubý stred zdieľanej mapovej bunky (nikdy vašu identitu ani presnú polohu), sťahované
 výhradne naším backendom</td>
 <td>Predpoveď počasia</td>
-<td>Presné umiestnenie servera sme nezávisle neoverili — pozri bod 6</td></tr>
+<td>Švajčiarska spoločnosť; API servery bežia cez GeoDNS v Európe aj Severnej Amerike — pozri bod 5</td></tr>
 </table>
 </div>
 <p>Vaše údaje <strong>nepredávame</strong> tretím stranám na ich vlastné účely, nezdieľame ich s inzerentmi
@@ -321,13 +332,18 @@ náš self-hosted navigačný server), beží v regiónoch EÚ (Varšava, Frankf
   overiť, kde presne Mapbox dáta pre európskych používateľov spracúva, ani aké konkrétne záruky
   (napr. štandardné zmluvné doložky) používa — odporúčame pozrieť si vlastnú politiku ochrany
   osobných údajov Mapboxu.</li>
-  <li><strong>Open-Meteo</strong> — jurisdikciu a presné umiestnenie servera sme z kódu nevedeli
-  nezávisle overiť.</li>
+  <li><strong>Open-Meteo</strong> prevádzkuje švajčiarska spoločnosť <strong>OpenMeteo GmbH</strong>
+  (Bürglen, Švajčiarsko). Švajčiarsko je krajina s rozhodnutím Európskej komisie o primeranosti, takže
+  spracovanie tam samo osebe nevyžaduje dodatočné záruky podľa GDPR. API servery Open-Meteo však bežia
+  cez GeoDNS rozložené <strong>v Európe aj v Severnej Amerike</strong>, takže v závislosti od smerovania
+  môže ísť aj o spracovanie mimo EÚ/EHP a mimo krajiny s rozhodnutím o primeranosti. Nášmu backendu sa
+  pritom posiela len hrubý stred zdieľanej mapovej bunky, nikdy vaša identita ani presná poloha.
+  (Overené na <a href="https://open-meteo.com/en/terms">open-meteo.com/en/terms</a>, október 2026.)</li>
 </ul>
 <div class="note">
-Tento bod je oznacený ako neoverený, nie domnienka predstieraná ako istota — pred finálnym publikovaním
-politiky odporúčame u oboch poskytovateľov priamo potvrdiť spracovateľské umiestnenie a právny
-mechanizmus prenosu.
+Mapbox: presné spracovateľské umiestnenie a konkrétny právny mechanizmus prenosu (napr. štandardné
+zmluvné doložky) sme neoverovali — toto zostáva označené ako neoverené, nie ako domnienka vydávaná za
+istotu, a treba si to potvrdiť priamo u Mapboxu pred finálnym publikovaním politiky.
 </div>
 
 <h2>6. Ako dlho údaje uchovávame</h2>
@@ -343,7 +359,8 @@ automaticky nevymaže</strong> — ide o samostatný záznam.</td></tr>
 <td>Po 14 dňoch bez návštevy danej oblasti sa prestane automaticky aktualizovať (nie zmazať) — zostáva
 v databáze, len sa už neobnovuje, pokiaľ sa do oblasti niekto nevráti</td></tr>
 <tr><td>Štandardné infraštruktúrne logy (IP, časová značka, chyby)</td>
-<td>Defaultná lehota Google Cloud Logging — nebola u nás vlastná konfigurácia nezávisle overená</td></tr>
+<td>30 dní (defaultná retencia Google Cloud Logging, bucket <code>_Default</code>) — overené priamo
+v projekte, vlastná (predĺžená) retencia nie je nastavená</td></tr>
 <tr><td>Vyhľadávacia história (posledných 5 miest)</td>
 <td>Uložená len na vašom zariadení, kým appku neodinštalujete alebo si nevymažete jej dáta —
 nikdy sa neposiela na naše servery</td></tr>
@@ -366,11 +383,9 @@ nikdy sa neposiela na naše servery</td></tr>
 <p>Ak máte pocit, že vaše údaje spracúvame v rozpore s GDPR, máte právo podať sťažnosť na:</p>
 <div class="card">
 <strong>Úrad na ochranu osobných údajov Slovenskej republiky</strong><br>
-Hraničná 12, 820 07 Bratislava 27
-</div>
-<div class="note">
-Presný aktuálny kontakt (email/web/telefón) úradu sme v tejto session nezávisle neoverili naživo —
-over si ho priamo na webe úradu pred publikovaním, aby bol odkaz aktuálny.
+Email: <a href="mailto:statny.dozor@pdp.gov.sk">statny.dozor@pdp.gov.sk</a><br>
+Telefón: +421 2 3231 3214<br>
+Web: <a href="https://dataprotection.gov.sk">dataprotection.gov.sk</a>
 </div>
 
 <h2>8. Vymazanie účtu a údajov</h2>
@@ -390,7 +405,7 @@ Appka interne počíta aj vlastné rizikové skóre (MRI), to sa však vo verzii
 v päte upravíme.</p>
 
 <footer>
-Posledná aktualizácia: 8. októbra 2026 · AlpinIO, Samuel Martyňuk ·
+Posledná aktualizácia: 10. októbra 2026 · AlpinIO, Samuel Martyňuk ·
 <a href="mailto:support.alpinio@gmail.com">support.alpinio@gmail.com</a>
 </footer>
 
@@ -402,7 +417,7 @@ Posledná aktualizácia: 8. októbra 2026 · AlpinIO, Samuel Martyňuk ·
 <div data-lang="en">
 
 <h1>Privacy Policy — AlpinIO</h1>
-<p class="byline">Last updated: October 8, 2026</p>
+<p class="byline">Last updated: October 10, 2026</p>
 
 <h2>1. Who processes your data</h2>
 <p>
@@ -533,9 +548,10 @@ routing server on Cloud Run) automatically logs technical request metadata (e.g.
 request path/parameters, error messages) for security and debugging, per Google Cloud's standard
 policies. AlpinIO does not configure this separately or use it for profiling.</p>
 <div class="note">
-We did not independently verify the exact retention period of these technical logs (Google Cloud
-Logging) in our own project settings during this review — assumed to be Google Cloud's default (typically
-30 days), not a custom configuration. Check Google Cloud Console → Logging if you need an exact figure.
+Verified directly in Google Cloud Console → Logging (project <code>snow-c973e</code>): the project uses
+the default log bucket <code>_Default</code> with a <strong>30-day</strong> retention — no custom
+(extended) retention is configured. (The <code>_Required</code> bucket, retained 400 days, holds only
+the mandatory audit records Google Cloud generates automatically, not a separate app configuration.)
 </div>
 
 <h2>4. Who we share data with</h2>
@@ -547,17 +563,17 @@ Logging) in our own project settings during this review — assumed to be Google
 infra logs</td>
 <td>Hosting, authentication, database (Firestore), photo storage, server logic (Cloud Functions)</td>
 <td>Firestore: <code>europe-central2</code> (Warsaw). Cloud Functions + our routing server (Cloud Run):
-<code>europe-west1</code> (Frankfurt). We could not independently confirm the exact Firebase Storage
-(profile photo) region from code — check the Firebase Console.</td></tr>
+<code>europe-west1</code> (Frankfurt). Firebase Storage (profile photos):
+<span class="todo">TO BE FILLED IN — verify region in Firebase Console</span>.</td></tr>
 <tr><td>Mapbox, Inc.</td>
 <td>Coordinates/search text directly from your device</td>
 <td>Map rendering, place search</td>
-<td>US company — see section 6 below on international transfer</td></tr>
-<tr><td>Open-Meteo</td>
+<td>US company — see section 5 below on international transfer</td></tr>
+<tr><td>Open-Meteo (OpenMeteo GmbH)</td>
 <td>Only the coarse center of a shared map cell (never your identity or exact location), fetched
 exclusively by our backend</td>
 <td>Weather forecast</td>
-<td>Exact server location not independently confirmed — see section 6</td></tr>
+<td>Swiss company; API servers run over GeoDNS across Europe and North America — see section 5</td></tr>
 </table>
 </div>
 <p>We do <strong>not</strong> sell your data to third parties for their own purposes, and we do not share
@@ -571,13 +587,18 @@ self-hosted routing server) runs in EU regions (Warsaw, Frankfurt). Beyond that:
   device, this likely constitutes a transfer of personal data outside the EU/EEA. We cannot confirm from
   our code exactly where Mapbox processes data for European users, nor which specific safeguards (e.g.
   standard contractual clauses) apply — please refer to Mapbox's own privacy policy.</li>
-  <li><strong>Open-Meteo</strong> — we could not independently confirm its jurisdiction or exact server
-  location from our code.</li>
+  <li><strong>Open-Meteo</strong> is operated by the Swiss company <strong>OpenMeteo GmbH</strong>
+  (Bürglen, Switzerland). Switzerland is covered by a European Commission adequacy decision, so
+  processing there does not by itself require additional GDPR safeguards. However, Open-Meteo's API
+  servers run over GeoDNS distributed <strong>across both Europe and North America</strong>, so depending
+  on routing, processing outside the EU/EEA and outside an adequacy-decision country can also occur.
+  Only the coarse center of a shared map cell is sent to it, never your identity or exact location.
+  (Verified at <a href="https://open-meteo.com/en/terms">open-meteo.com/en/terms</a>, October 2026.)</li>
 </ul>
 <div class="note">
-This section is flagged as unverified, not presented as a confident assertion — before finalizing this
-policy for publication, confirm the processing location and transfer mechanism directly with both
-providers.
+Mapbox: we did not verify the exact processing location or the specific legal transfer mechanism (e.g.
+standard contractual clauses) — this remains flagged as unverified, not presented as a confident
+assertion, and should be confirmed directly with Mapbox before finalizing this policy for publication.
 </div>
 
 <h2>6. How long we keep data</h2>
@@ -593,7 +614,8 @@ delete feedback reports</strong> — they are a separate record.</td></tr>
 <td>After 14 days with no visits to that area it stops auto-refreshing (not deleted) — it remains in the
 database, just stale, until someone returns to that area</td></tr>
 <tr><td>Standard infrastructure logs (IP, timestamp, errors)</td>
-<td>Google Cloud Logging's default retention — we did not independently verify a custom configuration</td></tr>
+<td>30 days (Google Cloud Logging's default retention, <code>_Default</code> bucket) — verified directly
+in the project, no custom (extended) retention is configured</td></tr>
 <tr><td>Search history (last 5 places)</td>
 <td>Stored only on your device until you uninstall the app or clear its data — never sent to our servers</td></tr>
 </table>
@@ -616,12 +638,9 @@ database, just stale, until someone returns to that area</td></tr>
 <div class="card">
 <strong>Office for Personal Data Protection of the Slovak Republic</strong><br>
 (Úrad na ochranu osobných údajov Slovenskej republiky)<br>
-Hraničná 12, 820 07 Bratislava 27, Slovakia
-</div>
-<div class="note">
-We did not independently re-verify the authority's current contact details (email/website/phone) live
-during this review — confirm them on the authority's own website before publishing, so the reference
-stays current.
+Email: <a href="mailto:statny.dozor@pdp.gov.sk">statny.dozor@pdp.gov.sk</a><br>
+Phone: +421 2 3231 3214<br>
+Web: <a href="https://dataprotection.gov.sk">dataprotection.gov.sk</a>
 </div>
 
 <h2>8. Account and data deletion</h2>
@@ -641,7 +660,7 @@ The app also internally computes its own risk score (MRI), but this is not shown
 update the date in the footer.</p>
 
 <footer>
-Last updated: October 8, 2026 · AlpinIO, Samuel Martyňuk ·
+Last updated: October 10, 2026 · AlpinIO, Samuel Martyňuk ·
 <a href="mailto:support.alpinio@gmail.com">support.alpinio@gmail.com</a>
 </footer>
 
