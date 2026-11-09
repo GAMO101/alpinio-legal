@@ -167,7 +167,7 @@
 <div data-lang="sk">
 
 <h1>Zásady ochrany osobných údajov — AlpinIO</h1>
-<p class="byline">Posledná aktualizácia: 28. októbra 2026</p>
+<p class="byline">Posledná aktualizácia: 9. novembra 2026</p>
 
 <h2>1. Kto spracúva vaše údaje</h2>
 <p>
@@ -215,30 +215,49 @@ appka nežiada (v <code>AndroidManifest.xml</code> je takéto oprávnenie len za
 <ul>
   <li>zobrazenie vašej pozície na mape,</li>
   <li>vycentrovanie počasia a lavínového bulletinu na vaše miesto,</li>
-  <li>výpočet pešej trasy a vyhľadávanie "v okolí",</li>
-  <li>výber najbližšieho z 3 výškových pásiem (údolie/stred/hrebeň) pri zobrazovaní počasia — GPS výška
-      (<code>Position.altitude</code>) sa použije výhradne na vašom zariadení na tento výber a nikdy sa
-      neposiela na náš backend.</li>
+  <li>výpočet pešej trasy a vyhľadávanie "v okolí".</li>
 </ul>
+<p>GPS výšku (nadmorskú výšku z GPS) appka nepoužíva. Nadmorskú výšku zobrazeného miesta dostane spolu
+s predpoveďou počasia (pozri Open-Meteo nižšie).</p>
 <p><strong>Komu a čo z polohy odchádza:</strong></p>
 <ul>
-  <li>Naše vlastné Cloud Functions (<code>europe-west1</code>, Belgicko) dostanú vaše súradnice, aby
-      vypočítali, do ktorej ~5 km mapovej bunky patríte. Ukladá sa zdieľaná dátová bunka, nie história
-      vašej osobnej polohy.</li>
+  <li>Naše vlastné Cloud Functions (<code>europe-west1</code>, Belgicko) dostanú súradnice vašej polohy
+      alebo zobrazeného miesta zaokrúhlené na približne 100 m, aby určili ~5 km mapovú bunku, lavínový
+      región, najbližšiu meteorologickú stanicu a predpoveď počasia pre miesto. Appka ich posiela, keď
+      zobrazuje podmienky pre miesto, a kým appku používate, aj približne pri každom presune o 2 km. Tieto
+      súradnice (~100 m) sa nikam neukladajú a nie sú viazané na účet. Ukladá sa len záznam o mapovej bunke
+      (čas, kedy ju niekto naposledy zobrazil), na kalibráciu interného rizikového skóre záznam o bunke
+      a hodine a predpoveď počasia pre bod zaokrúhlený na približne 1 km na 2 dni (bod 6). Žiadny
+      z týchto záznamov nie je viazaný na váš účet.
+      Súradnice idú v tele požiadavky, takže technické záznamy požiadaviek ich neobsahujú — obsahujú len
+      technické údaje požiadavky a vašu IP adresu (bod 3.6, uchovávanie 30 dní).</li>
+  <li>Ak si na domovskej obrazovke uložíte miesta, ich názvy a súradnice zostávajú <strong>len vo vašom
+      telefóne</strong>. Keď pre ne zobrazujeme podmienky, posielame súradnice miesta našim Cloud Functions
+      rovnako ako pri vašej polohe.</li>
   <li>Pri plánovaní trasy appka posiela štart/cieľ/medzizastávky (presné súradnice) na náš
       <strong>vlastný self-hosted navigačný server (BRouter, Cloud Run, <code>europe-west1</code>)</strong>.
       Tento server nemá vlastnú databázu používateľov ani úložisko trás a nevyžaduje autentifikáciu —
       endpoint je verejne dostupný. Google Cloud Run štandardne loguje technické
       metadáta HTTP požiadaviek (vrátane URL so súradnicami) rovnako, ako je popísané v bode 3.6 nižšie —
       tieto súradnice teda prechádzajú rovnakým štandardným infraštruktúrnym logovaním ako iné požiadavky.</li>
-  <li>Pri zobrazení mapy a vyhľadávaní miest appka posiela súradnice/vyhľadávací text <strong>priamo z
-      vášho zariadenia na Mapbox</strong> (samostatná americká spoločnosť) — ide o súčasť použitia
-      Mapbox SDK/API na vykreslenie mapy a vyhľadávanie. Pozri bod 5 nižšie k medzinárodnému prenosu.</li>
+  <li>Pri zobrazení mapy, vyhľadávaní miest a zisťovaní názvu miesta na domovskej obrazovke (názov obce
+      pre vašu polohu alebo pre miesto vybrané na mape; bod je pri tom zaokrúhlený na približne 11 m) appka
+      posiela súradnice/vyhľadávací text <strong>priamo z vášho zariadenia na Mapbox</strong> (samostatná
+      americká spoločnosť) — ide o súčasť použitia Mapbox SDK/API na vykreslenie mapy a vyhľadávanie. Pozri
+      bod 5 nižšie k medzinárodnému prenosu. Telemetriu Mapbox SDK (údaje o polohe a používaní, ktoré by SDK
+      inak posielalo Mapboxu) máme vypnutú; SDK posiela len technickú udalosť na fakturáciu, ktorá podľa
+      dokumentácie Mapboxu obsahuje náhodný identifikátor, verziu SDK, údaje o zariadení a IP adresu, bez
+      polohy.</li>
   <li>Keď mapa zobrazuje vrstvu turistických chodníkov, appka sťahuje jej mapové dlaždice priamo z vášho
       zariadenia zo služby <strong>Waymarked Trails</strong> (waymarkedtrails.org). Služba tak dostane
       vašu IP adresu a súradnice zobrazenej časti mapy — nie vašu identitu ani účet.</li>
-  <li>Na Open-Meteo (poskytovateľ počasia) sa <strong>nikdy</strong> neposiela vaša poloha priamo — komunikuje
-      s ním výhradne náš backend, a to len s hrubým stredom zdieľanej mapovej bunky, nikdy s vašou identitou.</li>
+  <li><strong>Predpoveď počasia (Open-Meteo).</strong> Keď appka zobrazuje počasie pre vašu polohu alebo
+      pre uložené miesto, náš backend pošle poskytovateľovi predpovede Open-Meteo polohu tohto miesta
+      <strong>zaokrúhlenú na približne 1 km</strong>. Open-Meteo volá náš server, nie váš telefón, takže
+      nedostane vašu IP adresu, identitu ani účet. Open-Meteo vráti predpoveď a nadmorskú výšku tohto bodu.
+      Náš backend predpoveď uloží ako záznam pre zaokrúhlený bod, bez väzby na účet; 2 dni po stiahnutí sa
+      záznam automaticky zmaže (databáza ho odstráni spravidla do 24 hodín po tejto lehote). Ak si to isté miesto zobrazí niekto do 30 minút, dostane predpoveď z tohto
+      záznamu a Open-Meteo sa nevolá. Z vášho zariadenia sa na Open-Meteo nič neposiela.</li>
   <li>Posledných 5 vyhľadaných miest sa ukladá <strong>len lokálne vo vašom zariadení</strong> (nie na našich
       serveroch) pre rýchlejšie opätovné vyhľadanie.</li>
   <li>Pri SOS volaní appka len otvorí bežný telefónny vytáčač (112 / Horská záchranná služba) — vašu
@@ -309,8 +328,9 @@ zmenách v projekte uchováva Google Cloud 400 dní.
 <table>
 <tr><th>Príjemca</th><th>Čo dostane</th><th>Prečo</th><th>Umiestnenie</th></tr>
 <tr><td>Google Firebase / Google Cloud</td>
-<td>Účtové údaje, spätná väzba, poloha (dočasne, na výpočet mapovej bunky), bezpečnostné anti-abuse
-signály, štandardné infra logy</td>
+<td>Účtové údaje, spätná väzba, poloha zaokrúhlená na ~100 m (na určenie mapovej bunky, lavínového
+regiónu, najbližšej stanice a predpovede; neukladá sa), predpoveď pre bod zaokrúhlený na ~1 km (bez
+väzby na účet, 2 dni), bezpečnostné anti-abuse signály, štandardné infra logy</td>
 <td>Hosting, autentifikácia, databáza (Firestore), úložisko fotiek (Storage), serverová logika
 (Cloud Functions)</td>
 <td>Firestore: <code>europe-central2</code> (Varšava). Cloud Functions a náš navigačný server (Cloud Run):
@@ -318,17 +338,19 @@ signály, štandardné infra logy</td>
 (Varšava). Firebase Authentication beží výhradne v dátových centrách v USA. App Check je globálna
 služba Googlu. Pozri bod 5.</td></tr>
 <tr><td>Mapbox, Inc.</td>
-<td>Súradnice/vyhľadávací text priamo z vášho zariadenia</td>
-<td>Vykreslenie mapy, vyhľadávanie miest</td>
+<td>Súradnice/vyhľadávací text priamo z vášho zariadenia; fakturačná udalosť SDK, podľa dokumentácie
+Mapboxu bez polohy (telemetria SDK vypnutá)</td>
+<td>Vykreslenie mapy, vyhľadávanie miest, názov miesta</td>
 <td>Americká spoločnosť — pozri bod 5 nižšie k medzinárodnému prenosu</td></tr>
 <tr><td>Waymarked Trails (waymarkedtrails.org)</td>
 <td>IP adresu a súradnice zobrazenej časti mapy, priamo z vášho zariadenia</td>
 <td>Vrstva turistických chodníkov na mape</td>
 <td>Nemecko</td></tr>
 <tr><td>Open-Meteo (OpenMeteo GmbH)</td>
-<td>Žiadne osobné údaje — náš backend mu posiela len súradnice stredu zdieľanej ~5 km mapovej bunky,
-ktoré nie sú viazané na žiadneho používateľa</td>
-<td>Predpoveď počasia</td>
+<td>Polohu zobrazeného miesta zaokrúhlenú na ~1 km, od nášho backendu (nie z vášho zariadenia), bez
+identity, účtu a vašej IP adresy; okrem toho súradnice pevných bodov meteorologických staníc</td>
+<td>Predpoveď počasia a nadmorská výška pre zobrazené miesto; overovanie presnosti predpovede pre
+stanice</td>
 <td>Švajčiarska spoločnosť (OpenMeteo GmbH)</td></tr>
 </table>
 </div>
@@ -346,13 +368,15 @@ spracúvajú údaje aj v USA:</p>
   ktorému Európska komisia prijala 10. júla 2023 rozhodnutie o primeranosti. Tam, kde je to potrebné,
   Google používa aj štandardné zmluvné doložky Európskej komisie. Viac:
   <a href="https://policies.google.com/privacy/frameworks">policies.google.com/privacy/frameworks</a></li>
-  <li><strong>Mapbox, Inc.</strong> je spoločnosť so sídlom v USA. Keď appka vykresľuje mapu a vyhľadáva
-  miesta, posiela súradnice a vyhľadávací text priamo z vášho zariadenia Mapboxu. Mapbox, Inc. je
+  <li><strong>Mapbox, Inc.</strong> je spoločnosť so sídlom v USA. Keď appka vykresľuje mapu, vyhľadáva
+  miesta alebo zisťuje názov miesta, posiela priamo z vášho zariadenia Mapboxu súradnice alebo
+  vyhľadávací text. Mapbox, Inc. je
   certifikovaný podľa rámca EU–US Data Privacy Framework (vrátane UK Extension a Swiss–US DPF). Zmluva
   Mapboxu o spracúvaní údajov navyše obsahuje štandardné zmluvné doložky Európskej komisie z roku 2021.
   Certifikácia: <a href="https://www.mapbox.com/legal/notice-of-certification">mapbox.com/legal/notice-of-certification</a></li>
-  <li><strong>Open-Meteo</strong> nedostáva žiadne osobné údaje (pozri bod 4), preto k prenosu osobných
-  údajov nedochádza.</li>
+  <li><strong>Open-Meteo (OpenMeteo GmbH)</strong> je švajčiarska spoločnosť. Od nášho backendu dostáva len
+  polohu zobrazeného miesta zaokrúhlenú na ~1 km, bez identity, účtu a IP adresy používateľa (bod 3.2).
+  Pre Švajčiarsko platí rozhodnutie Európskej komisie o primeranosti ochrany osobných údajov.</li>
 </ul>
 
 <h2>6. Ako dlho údaje uchovávame</h2>
@@ -364,9 +388,13 @@ spracúvajú údaje aj v USA:</p>
 <tr><td>Spätná väzba (feedback)</td><td>Najviac 24 mesiacov od odoslania. Po zmazaní účtu sa hlásenia
 okamžite anonymizujú — odstráni sa z nich identifikátor účtu a kontaktný e-mail. Ak ste do textu
 hlásenia sami napísali osobné údaje, napíšte nám a hlásenie zmažeme celé.</td></tr>
-<tr><td>Zdieľaná regionálna cache počasia/lavín (neosobné dáta, viazané na mapovú bunku, nie na účet)</td>
-<td>Po 14 dňoch bez návštevy danej oblasti sa prestane automaticky aktualizovať (nie zmazať) — zostáva
-v databáze, len sa už neobnovuje, pokiaľ sa do oblasti niekto nevráti</td></tr>
+<tr><td>Záznamy mapových buniek (neosobné dáta, viazané na ~5 km bunku, nie na účet ani na presnú polohu):
+lavínový región, čas posledného zobrazenia bunky, záznam bunky a hodiny na kalibráciu interného
+rizikového skóre</td>
+<td>Bez pevnej lehoty. Bunka, ktorú 14 dní nikto nezobrazil, sa označí ako neaktívna.</td></tr>
+<tr><td>Predpoveď počasia pre bod zaokrúhlený na ~1 km (bez väzby na účet)</td>
+<td>2 dni po stiahnutí sa automaticky zmaže (databáza ho odstráni spravidla do 24 hodín po tejto
+lehote)</td></tr>
 <tr><td>Štandardné infraštruktúrne logy (IP, časová značka, chyby)</td>
 <td>30 dní (štandardná retencia Google Cloud Logging)</td></tr>
 <tr><td>Vyhľadávacia história (posledných 5 miest)</td>
@@ -411,7 +439,7 @@ Appka interne počíta aj vlastné rizikové skóre (MRI), to sa však vo verzii
 v päte upravíme.</p>
 
 <footer>
-Posledná aktualizácia: 28. októbra 2026 · AlpinIO, Samuel Martyňuk ·
+Posledná aktualizácia: 9. novembra 2026 · AlpinIO, Samuel Martyňuk ·
 <a href="mailto:support.alpinio@gmail.com">support.alpinio@gmail.com</a>
 </footer>
 
@@ -423,7 +451,7 @@ Posledná aktualizácia: 28. októbra 2026 · AlpinIO, Samuel Martyňuk ·
 <div data-lang="en">
 
 <h1>Privacy Policy — AlpinIO</h1>
-<p class="byline">Last updated: October 28, 2026</p>
+<p class="byline">Last updated: November 9, 2026</p>
 
 <h2>1. Who processes your data</h2>
 <p>
@@ -475,16 +503,25 @@ request background location (the permission is only commented out, not active, i
 <ul>
   <li>show your position on the map,</li>
   <li>center weather and the avalanche bulletin on your location,</li>
-  <li>calculate hiking routes and search "nearby",</li>
-  <li>pick the nearest of 3 elevation bands (valley/mid/ridge) when showing weather — your GPS altitude
-      (<code>Position.altitude</code>) is used purely on your device for this and is never sent to our
-      backend.</li>
+  <li>calculate hiking routes and search "nearby".</li>
 </ul>
+<p>The app does not use GPS altitude. It receives the elevation of the displayed place together with the
+weather forecast (see Open-Meteo below).</p>
 <p><strong>Where your location actually goes:</strong></p>
 <ul>
-  <li>Our own Cloud Functions (<code>europe-west1</code>, Belgium) receive your coordinates to resolve
-      which ~5 km map cell you're in. We store the shared cell data, not a history of your personal
-      location.</li>
+  <li>Our own Cloud Functions (<code>europe-west1</code>, Belgium) receive the coordinates of your
+      location or of the displayed place, rounded to approximately 100 m, to determine the ~5 km map cell,
+      the avalanche region, the nearest weather station and the weather forecast for the place. The app
+      sends them when it shows conditions for a place and, while you are using the app, roughly every time
+      you move about 2 km. These coordinates (~100 m) are not stored anywhere and are not tied to your
+      account. We only store a record of the map cell (when someone last viewed it), a record of the cell
+      and hour to calibrate an internal risk score, and the weather forecast for a point rounded to
+      approximately 1 km, for 2 days (section 6). None of these records is tied to your account. The coordinates are sent in the request body, so request logs do not
+      contain them — they contain only technical request data and your IP address (section 3.6, kept for
+      30 days).</li>
+  <li>If you save places on the home screen, their names and coordinates stay <strong>only on your
+      phone</strong>. When we show conditions for them, we send the place's coordinates to our Cloud
+      Functions in the same way as your location.</li>
   <li>When planning a route, the app sends start/end/waypoint coordinates to our
       <strong>own self-hosted routing server (BRouter, Cloud Run, <code>europe-west1</code>)</strong>.
       That server has no user database or route storage of its own and requires no authentication — the
@@ -492,15 +529,26 @@ request background location (the permission is only commented out, not active, i
       by default (including the request URL, which contains the coordinates) in the same way described
       in section 3.6 below — these coordinates pass through the same standard infrastructure logging as
       any other request.</li>
-  <li>When rendering the map or searching for places, the app sends coordinates/search text
-      <strong>directly from your device to Mapbox</strong> (a separate US company) — this is inherent to
-      using the Mapbox SDK/API for map rendering and place search. See section 5 below on
-      international transfer.</li>
+  <li>When rendering the map, searching for places, or looking up a place name on the home screen (the
+      town name for your location or for a place picked on the map; the point is rounded to approximately
+      11 m for this), the app sends coordinates/search text <strong>directly from your device to
+      Mapbox</strong> (a separate US company) — this is inherent to using the Mapbox SDK/API for map
+      rendering and place search. See section 5 below on international transfer. We have turned off Mapbox
+      SDK telemetry (location and usage data the SDK would otherwise send to Mapbox); the SDK only sends a
+      technical billing event which, according to Mapbox's documentation, contains a random identifier,
+      SDK version, device details and IP address, without location.</li>
   <li>When the map shows the hiking trails layer, the app downloads its map tiles directly from your
       device from <strong>Waymarked Trails</strong> (waymarkedtrails.org). The service therefore receives
       your IP address and the coordinates of the visible map area — not your identity or account.</li>
-  <li>Your location is <strong>never</strong> sent directly to Open-Meteo (our weather provider) — only
-      our backend talks to it, and only with the coarse center of a shared map cell, never your identity.</li>
+  <li><strong>Weather forecast (Open-Meteo).</strong> When the app shows the weather for your location or
+      for a saved place, our backend sends the location of that place, <strong>rounded to approximately
+      1 km</strong>, to our forecast provider Open-Meteo. Open-Meteo is called by our server, not by your
+      phone, so it does not receive your IP address, identity or account. Open-Meteo returns the forecast and
+      the elevation of that point. Our backend stores the forecast as a record for the rounded point, not
+      tied to any account; 2 days after download the record is deleted automatically (the database
+      usually removes it within 24 hours after that). If someone views the same place within 30 minutes,
+      they get the forecast from this record and Open-Meteo is not called. Nothing is sent to Open-Meteo
+      from your device.</li>
   <li>Your last 5 searched places are stored <strong>only locally on your device</strong> (not on our
       servers) so you can find them again faster.</li>
   <li>During an SOS call, the app only opens your phone's normal dialer (112 / Mountain Rescue) — it does
@@ -571,25 +619,28 @@ to the project are kept by Google Cloud for 400 days.
 <table>
 <tr><th>Recipient</th><th>What they get</th><th>Why</th><th>Location</th></tr>
 <tr><td>Google Firebase / Google Cloud</td>
-<td>Account data, feedback reports, location (transiently, to resolve a map cell), anti-abuse security
-signals, standard infra logs</td>
+<td>Account data, feedback reports, location rounded to ~100 m (to determine the map cell, avalanche
+region, nearest station and forecast; not stored), the forecast for a point rounded to ~1 km (not tied
+to an account, 2 days), anti-abuse security signals, standard infra logs</td>
 <td>Hosting, authentication, database (Firestore), photo storage, server logic (Cloud Functions)</td>
 <td>Firestore: <code>europe-central2</code> (Warsaw). Cloud Functions and our routing server (Cloud Run):
 <code>europe-west1</code> (Belgium). Firebase Storage (profile photos): <code>europe-central2</code>
 (Warsaw). Firebase Authentication runs only in US data centers. App Check is a global Google service.
 See section 5.</td></tr>
 <tr><td>Mapbox, Inc.</td>
-<td>Coordinates/search text directly from your device</td>
-<td>Map rendering, place search</td>
+<td>Coordinates/search text directly from your device; an SDK billing event, according to Mapbox's
+documentation without location (SDK telemetry turned off)</td>
+<td>Map rendering, place search, place name</td>
 <td>US company — see section 5 below on international transfer</td></tr>
 <tr><td>Waymarked Trails (waymarkedtrails.org)</td>
 <td>IP address and coordinates of the visible map area, directly from your device</td>
 <td>Hiking trails layer on the map</td>
 <td>Germany</td></tr>
 <tr><td>Open-Meteo (OpenMeteo GmbH)</td>
-<td>No personal data — our backend sends it only the center coordinates of a shared ~5 km map cell,
-not tied to any user</td>
-<td>Weather forecast</td>
+<td>The location of the displayed place rounded to ~1 km, from our backend (not from your device),
+without identity, account or your IP address; in addition, the coordinates of fixed weather station
+points</td>
+<td>Weather forecast and elevation for the displayed place; checking forecast accuracy for stations</td>
 <td>Swiss company (OpenMeteo GmbH)</td></tr>
 </table>
 </div>
@@ -607,14 +658,16 @@ data in the US:</p>
   Commission adopted an adequacy decision on 10 July 2023. Where required, Google also relies on the
   European Commission's standard contractual clauses. More:
   <a href="https://policies.google.com/privacy/frameworks">policies.google.com/privacy/frameworks</a></li>
-  <li><strong>Mapbox, Inc.</strong> is a US-based company. When the app renders the map and searches for
-  places, it sends coordinates and search text directly from your device to Mapbox. Mapbox, Inc. is
+  <li><strong>Mapbox, Inc.</strong> is a US-based company. When the app renders the map, searches for
+  places or looks up a place name, it sends coordinates or search text directly from your device to
+  Mapbox. Mapbox, Inc. is
   certified under the EU–US Data Privacy Framework (including the UK Extension and the Swiss–US DPF).
   Mapbox's data processing agreement also includes the European Commission's 2021 standard contractual
   clauses. Certification:
   <a href="https://www.mapbox.com/legal/notice-of-certification">mapbox.com/legal/notice-of-certification</a></li>
-  <li><strong>Open-Meteo</strong> receives no personal data (see section 4), so no transfer of personal
-  data takes place.</li>
+  <li><strong>Open-Meteo (OpenMeteo GmbH)</strong> is a Swiss company. It receives from our backend only the
+  location of the displayed place rounded to ~1 km, without the user's identity, account or IP address
+  (section 3.2). Switzerland is covered by an adequacy decision of the European Commission.</li>
 </ul>
 
 <h2>6. How long we keep data</h2>
@@ -626,9 +679,13 @@ immediate (section 8)</td></tr>
 <tr><td>Feedback submissions</td><td>At most 24 months from submission. When you delete your account,
 your reports are anonymized immediately — the account identifier and contact email are removed. If you
 wrote personal details into the report text yourself, email us and we'll delete the whole report.</td></tr>
-<tr><td>Shared regional weather/avalanche cache (non-personal, tied to a map cell, not an account)</td>
-<td>After 14 days with no visits to that area it stops auto-refreshing (not deleted) — it remains in the
-database, just stale, until someone returns to that area</td></tr>
+<tr><td>Map cell records (non-personal, tied to a ~5 km cell, not to an account or an exact location):
+avalanche region, time the cell was last viewed, a cell-and-hour record to calibrate an internal risk
+score</td>
+<td>No fixed limit. A cell that nobody has viewed for 14 days is marked inactive.</td></tr>
+<tr><td>Weather forecast for a point rounded to ~1 km (not tied to an account)</td>
+<td>Deleted automatically 2 days after download (the database usually removes it within 24 hours after
+that)</td></tr>
 <tr><td>Standard infrastructure logs (IP, timestamp, errors)</td>
 <td>30 days (Google Cloud Logging's standard retention)</td></tr>
 <tr><td>Search history (last 5 places)</td>
@@ -673,7 +730,7 @@ The app also internally computes its own risk score (MRI), but this is not shown
 update the date in the footer.</p>
 
 <footer>
-Last updated: October 28, 2026 · AlpinIO, Samuel Martyňuk ·
+Last updated: November 9, 2026 · AlpinIO, Samuel Martyňuk ·
 <a href="mailto:support.alpinio@gmail.com">support.alpinio@gmail.com</a>
 </footer>
 
