@@ -167,7 +167,7 @@
 <div data-lang="sk">
 
 <h1>Zásady ochrany osobných údajov — AlpinIO</h1>
-<p class="byline">Posledná aktualizácia: 9. novembra 2026</p>
+<p class="byline">Posledná aktualizácia: 17. novembra 2026</p>
 
 <h2>1. Kto spracúva vaše údaje</h2>
 <p>
@@ -323,6 +323,39 @@ Tieto technické záznamy sa uchovávajú 30 dní. Samostatné povinné auditné
 zmenách v projekte uchováva Google Cloud 400 dní.
 </p>
 
+<h3>3.7 Notifikácie</h3>
+<p>Ak notifikácie povolíte, appka posiela upozornenia na novú lavínovú správu SLP HZS a zvýšenie stupňa,
+na výstrahy SHMÚ a v piatok prehľad na víkend — pre miesto, kde ste appku naposledy otvorili. Na doručenie
+používame službu Google <strong>Firebase Cloud Messaging (FCM)</strong>:</p>
+<ul>
+  <li>Google (FCM) dostane <strong>identifikátor zariadenia pre notifikácie (FCM token)</strong> a
+  <strong>zoznam tém</strong>, ktoré telefón odoberá. Z názvov tém sa dá vyčítať lavínový región, okres
+  a jazyk appky (napr. „Vysoké Tatry – východ, okres Poprad, slovenčina") — teda približná poloha
+  miesta posledného otvorenia appky, nie presná poloha.</li>
+  <li>Tému vyberá telefón sám z odpovede nášho servera pri otvorení appky. <strong>Polohu na pozadí
+  nesledujeme</strong> a na notifikácie nepotrebujeme žiadne povolenie polohy navyše.</li>
+  <li><strong>Náš server FCM token ani témy neukladá</strong> a nevie, ktorý používateľ odoberá ktorú
+  tému — správy posiela len na témy (napr. „lavínový región X v slovenčine"), nie konkrétnym ľuďom.
+  Token nie je spojený s vaším účtom.</li>
+  <li>Každé odoslanie zapíšeme do záznamu <code>notifications_log</code>: typ notifikácie, tému, čas,
+  identifikátor lavínovej správy alebo výstrahy, text a výsledok odoslania. Žiadne údaje o používateľoch,
+  žiadne tokeny. Záznam slúži na to, aby rovnaká správa neodišla dvakrát, a na hľadanie chýb; po 90
+  dňoch sa automaticky zmaže.</li>
+  <li><strong>Ako notifikácie vypnúť:</strong> v appke Nastavenia → Notifikácie (každý typ zvlášť), alebo
+  v systémových nastaveniach Androidu pre appku AlpinIO. Keď notifikácie vypnete v systéme, telefón
+  sa z tém odhlási pri najbližšom otvorení appky.</li>
+  <li>Pri <strong>odhlásení z účtu aj pri zmazaní účtu</strong> sa telefón odhlási zo všetkých tém a FCM
+  token sa zmaže.</li>
+</ul>
+<div class="table-scroll">
+<table>
+<tr><th>Účel</th><th>Právny základ</th></tr>
+<tr><td>Doručenie notifikácií, ktoré ste si zapli</td>
+<td>Plnenie zmluvy (čl. 6 ods. 1 písm. b) GDPR) — služba, o ktorú ste požiadali povolením notifikácií;
+kedykoľvek ju vypnete v Nastaveniach</td></tr>
+</table>
+</div>
+
 <h2>4. Komu údaje odovzdávame</h2>
 <div class="table-scroll">
 <table>
@@ -330,13 +363,14 @@ zmenách v projekte uchováva Google Cloud 400 dní.
 <tr><td>Google Firebase / Google Cloud</td>
 <td>Účtové údaje, spätná väzba, poloha zaokrúhlená na ~100 m (na určenie mapovej bunky, lavínového
 regiónu, najbližšej stanice a predpovede; neukladá sa), predpoveď pre bod zaokrúhlený na ~1 km (bez
-väzby na účet, 2 dni), bezpečnostné anti-abuse signály, štandardné infra logy</td>
+väzby na účet, 2 dni), bezpečnostné anti-abuse signály, štandardné infra logy; ak povolíte notifikácie,
+FCM token a zoznam tém (lavínový región, okres, jazyk, bod 3.7)</td>
 <td>Hosting, autentifikácia, databáza (Firestore), úložisko fotiek (Storage), serverová logika
-(Cloud Functions)</td>
+(Cloud Functions), doručovanie notifikácií (Firebase Cloud Messaging)</td>
 <td>Firestore: <code>europe-central2</code> (Varšava). Cloud Functions a náš navigačný server (Cloud Run):
 <code>europe-west1</code> (Belgicko). Firebase Storage (profilové fotky): <code>europe-central2</code>
-(Varšava). Firebase Authentication beží výhradne v dátových centrách v USA. App Check je globálna
-služba Googlu. Pozri bod 5.</td></tr>
+(Varšava). Firebase Authentication beží výhradne v dátových centrách v USA. App Check a Firebase Cloud
+Messaging sú globálne služby Googlu. Pozri bod 5.</td></tr>
 <tr><td>Mapbox, Inc.</td>
 <td>Súradnice/vyhľadávací text priamo z vášho zariadenia; fakturačná udalosť SDK, podľa dokumentácie
 Mapboxu bez polohy (telemetria SDK vypnutá)</td>
@@ -362,9 +396,10 @@ ani predajcami dát.</p>
 Functions a náš navigačný server v Belgicku, Firebase Storage tiež vo Varšave. Niektoré služby však
 spracúvajú údaje aj v USA:</p>
 <ul>
-  <li><strong>Google (Firebase Authentication, App Check).</strong> Firebase Authentication beží
-  výhradne v dátových centrách v USA — spracúva vašu e-mailovú adresu a prihlasovacie údaje. App Check
-  je globálna služba Googlu. Google LLC je certifikovaný podľa rámca EU–US Data Privacy Framework, ku
+  <li><strong>Google (Firebase Authentication, App Check, Firebase Cloud Messaging).</strong> Firebase
+  Authentication beží výhradne v dátových centrách v USA — spracúva vašu e-mailovú adresu a prihlasovacie
+  údaje. App Check a Firebase Cloud Messaging (FCM token a témy notifikácií, bod 3.7) sú globálne služby
+  Googlu. Google LLC je certifikovaný podľa rámca EU–US Data Privacy Framework, ku
   ktorému Európska komisia prijala 10. júla 2023 rozhodnutie o primeranosti. Tam, kde je to potrebné,
   Google používa aj štandardné zmluvné doložky Európskej komisie. Viac:
   <a href="https://policies.google.com/privacy/frameworks">policies.google.com/privacy/frameworks</a></li>
@@ -397,6 +432,12 @@ rizikového skóre</td>
 lehote)</td></tr>
 <tr><td>Štandardné infraštruktúrne logy (IP, časová značka, chyby)</td>
 <td>30 dní (štandardná retencia Google Cloud Logging)</td></tr>
+<tr><td>Záznam odoslaných notifikácií (<code>notifications_log</code>: typ, téma, čas, ID správy alebo
+výstrahy, text, výsledok; bez údajov o používateľoch)</td>
+<td>90 dní, potom sa automaticky zmaže (databáza ho odstráni spravidla do 24 hodín po tejto lehote)</td></tr>
+<tr><td>FCM token a odoberané témy notifikácií</td>
+<td>Náš server ich neukladá. V telefóne a u Googlu (FCM), kým notifikácie nevypnete, neodhlásite sa,
+nezmažete účet alebo neodinštalujete appku; pri odhlásení a zmazaní účtu sa token zmaže</td></tr>
 <tr><td>Vyhľadávacia história (posledných 5 miest)</td>
 <td>Uložená len na vašom zariadení, kým appku neodinštalujete alebo si nevymažete jej dáta —
 nikdy sa neposiela na naše servery</td></tr>
@@ -424,7 +465,8 @@ Web: <a href="https://dataprotection.gov.sk">dataprotection.gov.sk</a>
 
 <h2>8. Vymazanie účtu a údajov</h2>
 <p>Zmazanie účtu je zabudované priamo v appke: <strong>Nastavenia → Profil → Zmazať účet</strong>.
-Je okamžité, bez čakacej doby. Podrobný postup — vrátane alternatívy pre tých, čo appku už
+Je okamžité, bez čakacej doby. Telefón sa zároveň odhlási zo všetkých tém notifikácií a FCM token sa
+zmaže (bod 3.7). Podrobný postup — vrátane alternatívy pre tých, čo appku už
 odinštalovali — nájdete na samostatnej stránke:</p>
 <p><a href="delete_account.html">Ako zmazať účet AlpinIO →</a></p>
 
@@ -439,7 +481,7 @@ Appka interne počíta aj vlastné rizikové skóre (MRI), to sa však vo verzii
 v päte upravíme.</p>
 
 <footer>
-Posledná aktualizácia: 9. novembra 2026 · AlpinIO, Samuel Martyňuk ·
+Posledná aktualizácia: 17. novembra 2026 · AlpinIO, Samuel Martyňuk ·
 <a href="mailto:support.alpinio@gmail.com">support.alpinio@gmail.com</a>
 </footer>
 
@@ -451,7 +493,7 @@ Posledná aktualizácia: 9. novembra 2026 · AlpinIO, Samuel Martyňuk ·
 <div data-lang="en">
 
 <h1>Privacy Policy — AlpinIO</h1>
-<p class="byline">Last updated: November 9, 2026</p>
+<p class="byline">Last updated: November 17, 2026</p>
 
 <h2>1. Who processes your data</h2>
 <p>
@@ -614,6 +656,40 @@ These technical records are kept for 30 days. Separate mandatory audit records o
 to the project are kept by Google Cloud for 400 days.
 </p>
 
+<h3>3.7 Notifications</h3>
+<p>If you allow notifications, the app sends alerts about a new SLP HZS avalanche bulletin and a higher
+danger level, about SHMÚ weather warnings, and a weekend overview on Fridays — for the place where you
+last opened the app. They are delivered with Google's <strong>Firebase Cloud Messaging (FCM)</strong>:</p>
+<ul>
+  <li>Google (FCM) receives a <strong>device identifier for notifications (FCM token)</strong> and the
+  <strong>list of topics</strong> the phone subscribes to. The topic names reveal the avalanche region,
+  the district and the app language (e.g. "High Tatras – east, Poprad district, Slovak") — an
+  approximate location of where the app was last opened, not your exact location.</li>
+  <li>The phone picks the topics itself from our server's answer when the app is opened. <strong>We do
+  not track your location in the background</strong>, and notifications need no additional location
+  permission.</li>
+  <li><strong>Our server does not store the FCM token or the topics</strong> and does not know which user
+  subscribes to which topic — it sends only to topics (e.g. "avalanche region X in Slovak"), never to
+  individual people. The token is not linked to your account.</li>
+  <li>Every send is recorded in <code>notifications_log</code>: notification type, topic, time, the
+  bulletin or warning identifier, the text and the send result. No data about users, no tokens. The
+  record prevents the same message from going out twice and helps find errors; it is deleted
+  automatically after 90 days.</li>
+  <li><strong>How to turn notifications off:</strong> in the app under Settings → Notifications (each type
+  separately), or in Android's system settings for AlpinIO. When you turn notifications off in the system,
+  the phone unsubscribes from the topics the next time you open the app.</li>
+  <li>When you <strong>sign out or delete your account</strong>, the phone unsubscribes from all topics
+  and the FCM token is deleted.</li>
+</ul>
+<div class="table-scroll">
+<table>
+<tr><th>Purpose</th><th>Legal basis</th></tr>
+<tr><td>Delivering the notifications you turned on</td>
+<td>Performance of a contract (Art. 6(1)(b) GDPR) — a service you requested by allowing notifications;
+you can turn it off in Settings at any time</td></tr>
+</table>
+</div>
+
 <h2>4. Who we share data with</h2>
 <div class="table-scroll">
 <table>
@@ -621,12 +697,14 @@ to the project are kept by Google Cloud for 400 days.
 <tr><td>Google Firebase / Google Cloud</td>
 <td>Account data, feedback reports, location rounded to ~100 m (to determine the map cell, avalanche
 region, nearest station and forecast; not stored), the forecast for a point rounded to ~1 km (not tied
-to an account, 2 days), anti-abuse security signals, standard infra logs</td>
-<td>Hosting, authentication, database (Firestore), photo storage, server logic (Cloud Functions)</td>
+to an account, 2 days), anti-abuse security signals, standard infra logs; if you allow notifications,
+the FCM token and the topic list (avalanche region, district, language, section 3.7)</td>
+<td>Hosting, authentication, database (Firestore), photo storage, server logic (Cloud Functions),
+notification delivery (Firebase Cloud Messaging)</td>
 <td>Firestore: <code>europe-central2</code> (Warsaw). Cloud Functions and our routing server (Cloud Run):
 <code>europe-west1</code> (Belgium). Firebase Storage (profile photos): <code>europe-central2</code>
-(Warsaw). Firebase Authentication runs only in US data centers. App Check is a global Google service.
-See section 5.</td></tr>
+(Warsaw). Firebase Authentication runs only in US data centers. App Check and Firebase Cloud Messaging
+are global Google services. See section 5.</td></tr>
 <tr><td>Mapbox, Inc.</td>
 <td>Coordinates/search text directly from your device; an SDK billing event, according to Mapbox's
 documentation without location (SDK telemetry turned off)</td>
@@ -652,9 +730,10 @@ it with advertisers or data brokers.</p>
 Functions and our routing server in Belgium, Firebase Storage also in Warsaw. Some services also process
 data in the US:</p>
 <ul>
-  <li><strong>Google (Firebase Authentication, App Check).</strong> Firebase Authentication runs only in
-  US data centers — it processes your email address and sign-in data. App Check is a global Google
-  service. Google LLC is certified under the EU–US Data Privacy Framework, for which the European
+  <li><strong>Google (Firebase Authentication, App Check, Firebase Cloud Messaging).</strong> Firebase
+  Authentication runs only in US data centers — it processes your email address and sign-in data. App
+  Check and Firebase Cloud Messaging (FCM token and notification topics, section 3.7) are global Google
+  services. Google LLC is certified under the EU–US Data Privacy Framework, for which the European
   Commission adopted an adequacy decision on 10 July 2023. Where required, Google also relies on the
   European Commission's standard contractual clauses. More:
   <a href="https://policies.google.com/privacy/frameworks">policies.google.com/privacy/frameworks</a></li>
@@ -688,6 +767,12 @@ score</td>
 that)</td></tr>
 <tr><td>Standard infrastructure logs (IP, timestamp, errors)</td>
 <td>30 days (Google Cloud Logging's standard retention)</td></tr>
+<tr><td>Record of sent notifications (<code>notifications_log</code>: type, topic, time, bulletin or
+warning ID, text, result; no data about users)</td>
+<td>90 days, then deleted automatically (the database usually removes it within 24 hours after that)</td></tr>
+<tr><td>FCM token and subscribed notification topics</td>
+<td>Not stored by our server. On the phone and at Google (FCM) until you turn notifications off, sign
+out, delete your account or uninstall the app; the token is deleted on sign-out and account deletion</td></tr>
 <tr><td>Search history (last 5 places)</td>
 <td>Stored only on your device until you uninstall the app or clear its data — never sent to our servers</td></tr>
 </table>
@@ -715,7 +800,8 @@ Web: <a href="https://dataprotection.gov.sk">dataprotection.gov.sk</a>
 
 <h2>8. Account and data deletion</h2>
 <p>Account deletion is built into the app: <strong>Settings → Profile → Delete Account</strong>. It is
-immediate, with no waiting period. For the full procedure — including an alternative for anyone who has
+immediate, with no waiting period. The phone also unsubscribes from all notification topics and the FCM
+token is deleted (section 3.7). For the full procedure — including an alternative for anyone who has
 already uninstalled the app — see the dedicated page:</p>
 <p><a href="delete_account.html">How to delete your AlpinIO account →</a></p>
 
@@ -730,7 +816,7 @@ The app also internally computes its own risk score (MRI), but this is not shown
 update the date in the footer.</p>
 
 <footer>
-Last updated: November 9, 2026 · AlpinIO, Samuel Martyňuk ·
+Last updated: November 17, 2026 · AlpinIO, Samuel Martyňuk ·
 <a href="mailto:support.alpinio@gmail.com">support.alpinio@gmail.com</a>
 </footer>
 
